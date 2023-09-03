@@ -98,3 +98,8 @@ left join matriculas on aluno_id = alunos.id
 group by nome;
 
 --20
+select produto, count(id) as qt_transacoes
+from vendas
+group by produto
+order by qt_transacoes desc
+limit 1;
