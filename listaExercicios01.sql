@@ -67,6 +67,12 @@ select curso, nome from matriculas
 right join alunos on aluno_id = alunos.id;
 
 --15
+select autores.nome, count(livros.id) as livros_total
+from autores
+left join livros on autores.id = livros.autor_id
+group by autores.nome
+order by livros_total desc
+limit 1;
 
 --16
 
