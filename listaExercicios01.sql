@@ -10,6 +10,9 @@ select livros.titulo from livros
 inner join autores on autores.nome = 'J.K. Rowling';
 
 --4
+select alunos.nome from alunos
+inner join matriculas on matriculas.curso = 'Engenharia de Software' 
+and matriculas.aluno_id = alunos.id;
 
 --5
 
