@@ -86,6 +86,10 @@ order by receita_total asc
 limit 1;
 
 --18
+select nome, sum(20) as receita_total
+from autores
+left join livros on autores.id = autor_id
+group by nome;
 
 --19
 
