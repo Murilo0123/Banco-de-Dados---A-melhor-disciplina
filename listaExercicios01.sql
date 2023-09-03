@@ -36,6 +36,10 @@ from vendas
 group by produto;
 
 --9
+select produto, sum(receita) as receita_maior
+from vendas
+group by produto
+having receita_maior >= 10000;
 
 --10
 
