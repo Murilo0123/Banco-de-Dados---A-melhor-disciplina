@@ -92,5 +92,9 @@ left join livros on autores.id = autor_id
 group by nome;
 
 --19
+select nome, count(matriculas.id) as qt_matriculas
+from alunos
+left join matriculas on aluno_id = alunos.id
+group by nome;
 
 --20
