@@ -49,6 +49,9 @@ group by autores.nome
 having livros_total > 2;
 
 --11
+select titulo, nome from livros 
+inner join autores
+where autor_id = autores.id;
 
 --12
 
