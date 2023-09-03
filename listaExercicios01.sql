@@ -20,6 +20,10 @@ from vendas
 group by produto;
 
 --6
+select autores.nome, count(livros.id) as livros_total
+from autores
+left join livros on autores.id = livros.autor_id
+group by autores.nome;
 
 --7
 
