@@ -63,6 +63,8 @@ select nome, titulo from autores
 left join livros on autores.id = autor_id;
 
 --14
+select curso, nome from matriculas
+right join alunos on aluno_id = alunos.id;
 
 --15
 
