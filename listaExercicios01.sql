@@ -67,7 +67,8 @@ select curso, nome from matriculas
 right join alunos on aluno_id = alunos.id;
 
 --15
-
+select nome, curso from alunos
+inner join matriculas on alunos.id = aluno_id;
 
 --16
 select autores.nome, count(livros.id) as livros_total
