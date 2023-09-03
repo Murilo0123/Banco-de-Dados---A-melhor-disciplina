@@ -31,6 +31,9 @@ from matriculas
 group by curso;
 
 --8
+select produto, avg(receita) as média_receita
+from vendas
+group by produto;
 
 --9
 
