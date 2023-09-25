@@ -17,4 +17,13 @@ end;
 //
 call sp_LivrosPorCategoria('Ciência');
 //
+create procedure sp_ContarLivrosPorCategoria(in nome_cat varchar(100))
+begin
+	select count(Titulo) as num_livros
+    from livro join categoria
+    where livro.Categoria_ID = categoria.Categoria_ID and categoria.Nome = nome_cat;
+end;
+//
+call sp_ContarLivrosPorCategoria('História');
+//
 delimiter ; 
