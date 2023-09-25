@@ -99,4 +99,19 @@ end;
 //
 call sp_AutorMaisVelho();
 //	
+CREATE PROCEDURE sp_contar_livros_por_categoria(in nome_cat varchar(100))
+BEGIN
+    declare num_livros int;
+
+    -- Seleciona o número de livros para a categoria especificada
+    select count(titulo) as num_livros
+    from livro 
+    join categoria
+    where livro.categoria_id = categoria.categoria_id and categoria.nome = nome_cat
+    into num_livros;
+
+    -- Retorna o número de livros
+    select num_livros;
+END;
+//
 delimiter ; 
