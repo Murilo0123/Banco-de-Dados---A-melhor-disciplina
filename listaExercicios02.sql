@@ -44,4 +44,13 @@ end;
 //
 call sp_VerificarLivrosCategoria("Física", @resp);
 //
+create procedure sp_LivrosAteAno(in ano_publi varchar(50))
+begin
+	select Titulo 
+    from livro
+    where Ano_Publicacao <= ano_publi;
+end;
+//
+call sp_LivrosAteAno("1999");
+//	
 delimiter ; 
