@@ -1,4 +1,3 @@
---ex 1
 delimiter //
 create procedure sp_ListarAutores()
 begin
