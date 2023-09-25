@@ -89,4 +89,14 @@ end;
 //
 call sp_AdicionarLivro("Obras pra que te quero?", 2, 2023, 1500, 2, @mensagem);
 //	
+create procedure sp_AutorMaisVelho()
+begin
+	select Nome, Sobrenome
+    from autor
+    order by Data_Nascimento asc
+    limit 1;
+end;
+//
+call sp_AutorMaisVelho();
+//	
 delimiter ; 
