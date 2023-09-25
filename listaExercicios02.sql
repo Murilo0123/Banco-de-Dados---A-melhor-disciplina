@@ -63,4 +63,30 @@ end;
 //
 call sp_TitulosPorCategoria("Autoajuda");
 //	
+CREATE PROCEDURE sp_AdicionarLivro(
+    in titulo_livro varchar(255),
+    in editora_id int,
+    in ano_publicacao int,
+    in numero_paginas int,
+    in categoria_id int,
+    out mensagem varchar(100)
+)
+begin
+    declare livro_existente int;
+	select COUNT(*) into livro_existente
+    from Livro
+    where Titulo = titulo_livro;
+    if livro_existente > 0 then
+        set mensagem = "Já existe um livro com esse título.";
+    else
+        insert into Livro (Titulo, Editora_ID, Ano_Publicacao, Numero_Paginas, Categoria_ID)
+        values (titulo_livro, editora_id, ano_publicacao, numero_paginas, categoria_id);
+
+        set mensagem = "Livro adicionado com sucesso.";
+    end if;
+    select mensagem;
+end;
+//
+call sp_AdicionarLivro("Obras pra que te quero?", 2, 2023, 1500, 2, @mensagem);
+//	
 delimiter ; 
