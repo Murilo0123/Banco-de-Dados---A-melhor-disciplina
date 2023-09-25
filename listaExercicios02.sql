@@ -114,4 +114,13 @@ BEGIN
     select num_livros;
 END;
 //
-delimiter ; 
+create procedure sp_LivrosESeusAutores()
+begin
+	select livro.Titulo, autor.Nome, autor.Sobrenome
+    from livro inner join autor_livro on livro.Livro_ID = autor_livro.Livro_ID
+    inner join Autor on Autor_Livro.Autor_ID = Autor.Autor_ID;
+end;
+//
+call sp_LivrosESeusAutores();
+//
+delimiter ;
