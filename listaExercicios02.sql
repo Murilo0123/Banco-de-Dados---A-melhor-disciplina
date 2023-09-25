@@ -53,4 +53,14 @@ end;
 //
 call sp_LivrosAteAno("1999");
 //	
+create procedure sp_TitulosPorCategoria(in nome_categoria varchar(100))
+begin
+	select Titulo 
+    from livro
+    inner join categoria on livro.Categoria_ID = categoria.Categoria_ID
+    where Nome = nome_categoria;
+end;
+//
+call sp_TitulosPorCategoria("Autoajuda");
+//	
 delimiter ; 
