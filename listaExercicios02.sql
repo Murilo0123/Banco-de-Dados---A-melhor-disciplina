@@ -25,4 +25,23 @@ end;
 //
 call sp_ContarLivrosPorCategoria('História');
 //
+create procedure sp_VerificarLivrosCategoria(in nom_cat varchar(100), out resp varchar(100))
+begin
+	declare quant int;
+	select count(titulo) as livros
+    into quant
+    from livro 
+    inner join categoria on categoria.Categoria_ID = livro.Categoria_ID
+    where categoria.Nome = nom_cat;
+    
+    if quant > 0 
+    then set resp = "Possui";
+    else
+    set resp = "Não possui";
+    end if;
+    select resp;
+end;
+//
+call sp_VerificarLivrosCategoria("Física", @resp);
+//
 delimiter ; 
