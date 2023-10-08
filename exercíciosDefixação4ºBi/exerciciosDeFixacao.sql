@@ -22,3 +22,24 @@ SELECT
         ELSE CONCAT('Sr. ', nome)
     END AS nome_com_tratamento
 FROM nomes;
+
+-- Funções Numéricas:
+-- a) Crie uma tabela produtos
+CREATE TABLE produtos (
+    produto VARCHAR(50),
+    preco DECIMAL(10, 2),
+    quantidade INT
+);
+
+-- Insira dados na tabela produtos
+INSERT INTO produtos (produto, preco, quantidade)
+VALUES("Varal", 14.50, 5), ("Carrinho de controle remoto", 75.88, 16);
+
+-- b) Utilize a função ROUND() para arredondar os preços para 2 casas decimais.
+SELECT produto, ROUND(preco, 2) FROM produtos;
+
+-- c) Use a função ABS() para exibir o valor absoluto das quantidades.
+SELECT produto, ABS(quantidade) FROM produtos;
+
+-- d) Calcule a média dos preços dos produtos utilizando a função AVG().
+SELECT AVG(preco) AS media_preco FROM produtos;
