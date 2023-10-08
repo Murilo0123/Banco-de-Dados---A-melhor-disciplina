@@ -62,3 +62,17 @@ SELECT DATEDIFF(data_evento, '2023-01-01') AS dias_desde_inicio FROM eventos;
 -- d) Utilize a função DAYNAME() para exibir o nome do dia da semana de cada evento.
 SELECT data_evento, DAYNAME(data_evento) AS nome_dia_semana FROM eventos;
 
+-- Funções de Controle de Fluxo:
+-- a) Em sua tabela produtos, use a função IF() para determinar se um produto está "Em estoque" ou "Fora de estoque" baseado na quantidade.
+SELECT produto,
+       IF(quantidade > 0, 'Em estoque', 'Fora de estoque') AS status_estoque
+FROM produtos;
+
+-- b) Use a função CASE para classificar os produtos em categorias de preço: "Barato", "Médio" e "Caro".
+SELECT produto,
+       CASE
+           WHEN preco <= 50 THEN 'Barato'
+           WHEN preco <= 100 THEN 'Médio'
+           ELSE 'Caro'
+       END AS categoria_preco
+FROM produtos;
