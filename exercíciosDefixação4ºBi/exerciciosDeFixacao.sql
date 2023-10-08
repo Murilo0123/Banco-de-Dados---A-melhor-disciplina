@@ -94,3 +94,16 @@ DELIMITER ;
 
 -- b) Use esta função para calcular o valor total de cada item em sua tabela produtos.
 SELECT produto, quantidade, preco, TOTAL_VALOR(preco, quantidade) AS valor_total FROM produtos;
+
+-- Funções de Agregação:
+-- a) Conte o número total de produtos usando a função COUNT().
+SELECT COUNT(*) AS total_produtos FROM produtos;
+
+-- b) Determine o produto mais caro usando a função MAX().
+SELECT produto, preco FROM produtos WHERE preco = (SELECT MAX(preco) FROM produtos);
+
+-- c) Determine o produto mais barato usando a função MIN().
+SELECT produto, preco FROM produtos WHERE preco = (SELECT MIN(preco) FROM produtos);
+
+-- d) Calcule a soma total dos produtos em estoque utilizando as funções SUM() e IF().
+SELECT SUM(IF(quantidade > 0, preco, 0)) AS valor_total_estoque FROM produtos;
