@@ -107,3 +107,69 @@ SELECT produto, preco FROM produtos WHERE preco = (SELECT MIN(preco) FROM produt
 
 -- d) Calcule a soma total dos produtos em estoque utilizando as funções SUM() e IF().
 SELECT SUM(IF(quantidade > 0, preco, 0)) AS valor_total_estoque FROM produtos;
+
+-- Criando funções:
+-- a) Crie uma função que retorno o Fatorial de um número.
+DELIMITER //
+
+CREATE FUNCTION CALCULA_FATORIAL(n INT)
+RETURNS INT
+BEGIN
+    DECLARE resultado INT;
+    SET resultado = 1;
+    WHILE n > 0 DO
+        SET resultado = resultado * n;
+        SET n = n - 1;
+    END WHILE;
+    RETURN resultado;
+END;
+//
+
+DELIMITER ;
+
+SELECT CALCULA_FATORIAL(5) AS fatorial_de_5;
+
+-- b) Crie uma função que calcule o exponencial de um número.
+DELIMITER //
+
+CREATE FUNCTION CALCULA_EXPONENCIAL(base INT, expoente INT)
+RETURNS INT
+BEGIN
+    DECLARE resultado INT;
+    SET resultado = 1;
+    WHILE expoente > 0 DO
+        SET resultado = resultado * base;
+        SET expoente = expoente - 1;
+    END WHILE;
+    RETURN resultado;
+END;
+//
+
+DELIMITER ;
+
+SELECT CALCULA_EXPONENCIAL(2, 3) AS exponencial_de_2_ao_cubo;
+
+-- c) Crie uma função que verifica se uma palavra é palíndromo ou não.
+DELIMITER //
+
+CREATE FUNCTION VERIFICA_PALINDROMO(palavra VARCHAR(50))
+RETURNS INT
+BEGIN
+    DECLARE tamanho INT;
+    DECLARE i INT;
+    SET tamanho = LENGTH(palavra);
+    SET i = 1;
+    WHILE i <= tamanho / 2 DO
+        IF SUBSTRING(palavra, i, 1) != SUBSTRING(palavra, tamanho - i + 1, 1) THEN
+            RETURN 0;
+        END IF;
+        SET i = i + 1;
+    END WHILE;
+    RETURN 1;
+END;
+//
+
+DELIMITER ;
+
+SELECT VERIFICA_PALINDROMO('radar') AS e_palindromo;
+
