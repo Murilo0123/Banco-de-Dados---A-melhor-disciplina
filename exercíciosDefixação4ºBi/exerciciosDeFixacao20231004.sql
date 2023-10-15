@@ -34,7 +34,7 @@ select total_livros_por_genero("Romance");
 --ex2
 create function listar_livros_por_autor(first_name varchar(255), last_name varchar(255))
 returns text
-DETERMINISTIC
+deterministic
 begin
     declare lista_de_livros text default '';
     declare done boolean default false;
@@ -93,4 +93,46 @@ end; //
 select atualizar_resumos();
 select resumo from livro;
 //
+//
+-- ex4
+delimiter //
 
+create function media_livros_por_editora()
+returns decimal(10, 2)
+deterministic
+begin
+    declare total_livros int;
+    declare total_editoras int;
+    declare media decimal(10, 2);
+    declare done boolean default false;
+    declare editora_id int;
+    declare livro_count int;
+    declare editora_cursor cursor for
+        select e.id, count(l.id) as livro_count
+        from editora as e
+        left join livro as l on e.id = l.id_editora
+        group by e.id;
+    declare continue handler for not found set done = true;
+    set total_livros = 0;
+    set total_editoras = 0;
+    open editora_cursor;
+    fetch_loop: loop
+        fetch editora_cursor into editora_id, livro_count;
+        if done then
+            leave fetch_loop;
+        end if;
+        set total_livros = total_livros + livro_count;
+        set total_editoras = total_editoras + 1;
+    end loop fetch_loop;
+    close editora_cursor;
+    if total_editoras > 0 then
+        set media = total_livros / total_editoras;
+    else
+        set media = 0.00;
+    end if;
+    return media;
+end; //
+
+ //
+ select media_livros_por_editora();
+ //
