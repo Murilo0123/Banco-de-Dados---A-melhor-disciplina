@@ -62,3 +62,35 @@ end;
 //
 select listar_livros_por_autor("João", "Silva");
 //
+//
+-- ex3
+create function atualizar_resumos()
+returns int
+deterministic
+begin
+    declare done boolean default false;
+    declare livro_id int;
+    declare resumo_text text;
+    declare livro_cursor cursor for
+        select id, resumo
+        from livro;
+    declare continue handler for not found set done = true;
+    open livro_cursor;
+    update_loop: loop
+        fetch livro_cursor into livro_id, resumo_text;
+        if done then
+            leave update_loop;
+        end if;
+        set resumo_text = concat(resumo_text, ' Este é um excelente livro!');
+        update livro
+        set resumo = resumo_text
+        where id = livro_id;
+    end loop update_loop;
+    close livro_cursor;
+    return 1;
+end; //
+//
+select atualizar_resumos();
+select resumo from livro;
+//
+
