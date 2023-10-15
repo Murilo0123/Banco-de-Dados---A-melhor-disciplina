@@ -136,3 +136,48 @@ end; //
  //
  select media_livros_por_editora();
  //
+//
+-- ex5
+create function autores_sem_livros()
+returns text
+deterministic
+begin
+    declare lista_autores_sem_livros text default '';
+    declare done boolean default false;
+    declare autor_id int;
+    declare autor_tem_livros int default 0;
+    declare autor_cursor cursor for
+        select id
+        from autor;
+    declare livro_cursor cursor for
+        select distinct a.id
+        from autor as a
+        left join livro_autor as la on a.id = la.id_autor;
+    declare continue handler for not found set done = true;
+    open autor_cursor;
+    verificar_autores: loop
+        fetch autor_cursor into autor_id;
+        if done then
+            leave verificar_autores;
+        end if;
+        set autor_tem_livros = 0;
+        open livro_cursor;
+        buscar_livros: loop
+            fetch livro_cursor into autor_id;
+            if autor_tem_livros = 1 then
+                leave buscar_livros;
+            end if;
+        end loop buscar_livros;
+        close livro_cursor;
+        if autor_tem_livros = 0 then
+            set lista_autores_sem_livros = concat(lista_autores_sem_livros, concat_ws(' ', (select primeiro_nome from autor where id = autor_id), (select ultimo_nome from autor where id = autor_id)), ', ');
+        end if;
+    end loop verificar_autores;
+    close autor_cursor;
+    set lista_autores_sem_livros = left(lista_autores_sem_livros, length(lista_autores_sem_livros) - 2);
+    return lista_autores_sem_livros;
+end;
+//
+//
+select autores_sem_livros();
+//
