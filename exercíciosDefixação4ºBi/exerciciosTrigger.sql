@@ -3,7 +3,7 @@ create trigger trigger_mensagem_insert
 after insert on clientes 
 for each row
 insert into auditoria ( mensagem, data_hora)
-values ("A tabela foi alterada", now());
+values ("Nome adicionado", now());
 
 insert into clientes (nome)
 values ("Cleberson");
