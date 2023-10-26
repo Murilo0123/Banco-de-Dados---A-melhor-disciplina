@@ -54,3 +54,26 @@ update clientes
 set nome = ""
 where id = 3;
 //
+
+-- ex5
+delimiter //
+create trigger trigger_estoque
+after insert on pedidos
+for each row
+begin
+declare estoque_atual int;
+select estoque into estoque_atual from produtos where id = new.produto_id;
+update produtos
+set estoque = estoque - new.quantidade
+where id = new.produto_id;
+
+if estoque_atual - new.quantidade < 5 then 
+	insert into auditoria (mensagem, data_hora)
+	values (concat('Hora de repor o estoque'),now());
+end if;
+end;
+//
+insert into pedidos(produto_id, quantidade)
+values (1, 8);
+select * from auditoria;
+//
