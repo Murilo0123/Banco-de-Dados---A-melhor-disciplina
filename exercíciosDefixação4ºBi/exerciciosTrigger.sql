@@ -31,8 +31,6 @@ for each row
 insert into auditoria (mensagem, data_hora)
 values (concat('O nome ', old.nome, ' foi atualizado para ', new.nome), now());
 
-drop trigger trigger_mensagem_update;
-
 update clientes
 set nome = "Hugo"
 where id = 4;
@@ -40,3 +38,19 @@ where id = 4;
 select * from clientes;
 select * from auditoria;
 
+-- ex4
+delimiter //
+create trigger trigger_mensagem_update_nula
+before update on clientes
+for each row
+begin
+if new.nome is null or new.nome = '' or new.nome = "" then
+	insert into auditoria (mensagem, data_hora)
+	values ("Não foi possível atualizar", now());
+end if;
+end;
+//
+update clientes
+set nome = ""
+where id = 3;
+//
